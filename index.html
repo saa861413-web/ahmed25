@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>نظام تسجيل درجات الطلاب</title>
+    <title>نظام إدارة درجات الطلاب</title>
 
     <style>
 
@@ -37,9 +37,11 @@
 
         .container {
             width: 95%;
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 30px auto;
         }
+
+        /* الإحصائيات */
 
         .stats {
             display: grid;
@@ -72,6 +74,8 @@
             margin: 12px 0 0;
         }
 
+        /* البطاقات */
+
         .card {
             background: white;
             padding: 25px;
@@ -87,6 +91,8 @@
             color: #1e3a8a;
         }
 
+        /* النماذج */
+
         .form {
             display: grid;
 
@@ -96,7 +102,8 @@
             gap: 15px;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 13px;
 
@@ -105,17 +112,24 @@
 
             font-size: 15px;
             outline: none;
+
+            background: white;
         }
 
-        input:focus {
+        input:focus,
+        select:focus {
             border-color: #1e3a8a;
         }
 
+        /* الأزرار */
+
         button {
             border: none;
+
             padding: 12px 22px;
 
             border-radius: 8px;
+
             cursor: pointer;
 
             font-size: 15px;
@@ -136,6 +150,16 @@
             background: #b91c1c;
         }
 
+        .edit {
+            background: #d97706;
+        }
+
+        .edit:hover {
+            background: #b45309;
+        }
+
+        /* الجدول */
+
         .table-container {
             overflow-x: auto;
         }
@@ -146,7 +170,7 @@
 
             margin-top: 15px;
 
-            min-width: 1000px;
+            min-width: 1100px;
         }
 
         th,
@@ -167,6 +191,39 @@
             background: #f8fafc;
         }
 
+        /* قائمة المدرسين */
+
+        .teacher-list {
+            margin-top: 20px;
+        }
+
+        .teacher-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #f8fafc;
+
+            padding: 12px 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 8px;
+        }
+
+        .teacher-name {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+
+        /* الهاتف */
+
         @media (max-width: 700px) {
 
             .container {
@@ -184,6 +241,7 @@
         }
 
     </style>
+
 </head>
 
 
@@ -193,11 +251,11 @@
 <header>
 
     <h1>
-        نظام تسجيل درجات الطلاب
+        نظام إدارة درجات الطلاب
     </h1>
 
     <p>
-        إدارة درجات الطلاب بطريقة سهلة ومنظمة
+        إدارة الطلاب والمدرسين والدرجات
     </p>
 
 </header>
@@ -219,6 +277,19 @@
             </h3>
 
             <p id="studentCount">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <h3>
+                إجمالي المدرسين
+            </h3>
+
+            <p id="teacherCount">
                 0
             </p>
 
@@ -255,6 +326,41 @@
 
 
 
+    <!-- إدارة المدرسين -->
+
+    <div class="card">
+
+        <h2>
+            إدارة المدرسين
+        </h2>
+
+
+        <div class="form">
+
+            <input
+                type="text"
+                id="teacherName"
+                placeholder="اكتب اسم المدرس"
+            >
+
+            <button onclick="addTeacher()">
+                إضافة مدرس
+            </button>
+
+        </div>
+
+
+        <div
+            class="teacher-list"
+            id="teacherList"
+        >
+
+        </div>
+
+    </div>
+
+
+
     <!-- إضافة طالب -->
 
     <div class="card">
@@ -279,6 +385,15 @@
                 id="studentClass"
                 placeholder="الفصل"
             >
+
+
+            <select id="teacher">
+
+                <option value="">
+                    اختر المدرس
+                </option>
+
+            </select>
 
 
             <input
@@ -334,7 +449,7 @@
 
 
 
-    <!-- جدول الدرجات -->
+    <!-- جدول الطلاب -->
 
     <div class="card">
 
@@ -352,9 +467,7 @@
 
                     <tr>
 
-                        <th>
-                            #
-                        </th>
+                        <th>#</th>
 
                         <th>
                             اسم الطالب
@@ -365,19 +478,23 @@
                         </th>
 
                         <th>
-                            درجة التحريري
+                            المدرس
                         </th>
 
                         <th>
-                            درجة السرد
+                            التحريري
                         </th>
 
                         <th>
-                            درجة الشفوي
+                            السرد
                         </th>
 
                         <th>
-                            درجة الواجب
+                            الشفوي
+                        </th>
+
+                        <th>
+                            الواجب
                         </th>
 
                         <th>
@@ -420,7 +537,16 @@
 <script>
 
 
-    // تحميل البيانات
+    /* =========================
+       البيانات
+    ========================= */
+
+
+    let teachers =
+        JSON.parse(
+            localStorage.getItem("teachers")
+        ) || [];
+
 
     let students =
         JSON.parse(
@@ -429,7 +555,238 @@
 
 
 
-    // إضافة طالب
+    /* =========================
+       إضافة مدرس
+    ========================= */
+
+
+    function addTeacher() {
+
+
+        const input =
+            document.getElementById(
+                "teacherName"
+            );
+
+
+        const name =
+            input.value.trim();
+
+
+        if (!name) {
+
+            alert(
+                "من فضلك اكتب اسم المدرس."
+            );
+
+            return;
+        }
+
+
+        if (teachers.includes(name)) {
+
+            alert(
+                "هذا المدرس موجود بالفعل."
+            );
+
+            return;
+        }
+
+
+        teachers.push(name);
+
+
+        saveTeachers();
+
+
+        input.value = "";
+
+
+        displayTeachers();
+
+
+        updateTeacherSelect();
+
+    }
+
+
+
+    /* =========================
+       عرض المدرسين
+    ========================= */
+
+
+    function displayTeachers() {
+
+
+        const list =
+            document.getElementById(
+                "teacherList"
+            );
+
+
+        list.innerHTML = "";
+
+
+        if (teachers.length === 0) {
+
+            list.innerHTML = `
+                <div class="empty">
+                    لا يوجد مدرسون مضافون حتى الآن.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        teachers.forEach(
+            (teacher, index) => {
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "teacher-item";
+
+
+                item.innerHTML = `
+
+                    <span class="teacher-name">
+                        ${teacher}
+                    </span>
+
+                    <button
+                        class="delete"
+                        onclick="
+                            deleteTeacher(${index})
+                        "
+                    >
+                        حذف
+                    </button>
+
+                `;
+
+
+                list.appendChild(item);
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================
+       حذف مدرس
+    ========================= */
+
+
+    function deleteTeacher(index) {
+
+
+        const teacher =
+            teachers[index];
+
+
+        const used =
+            students.some(
+                student =>
+                    student.teacher === teacher
+            );
+
+
+        if (used) {
+
+            alert(
+                "لا يمكن حذف هذا المدرس لأنه مرتبط بطلاب."
+            );
+
+            return;
+        }
+
+
+        if (
+            confirm(
+                "هل أنت متأكد من حذف المدرس؟"
+            )
+        ) {
+
+            teachers.splice(index, 1);
+
+
+            saveTeachers();
+
+
+            displayTeachers();
+
+
+            updateTeacherSelect();
+
+        }
+
+    }
+
+
+
+    /* =========================
+       تحديث قائمة المدرسين
+    ========================= */
+
+
+    function updateTeacherSelect() {
+
+
+        const select =
+            document.getElementById(
+                "teacher"
+            );
+
+
+        select.innerHTML = `
+
+            <option value="">
+                اختر المدرس
+            </option>
+
+        `;
+
+
+        teachers.forEach(
+            teacher => {
+
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    teacher;
+
+
+                option.textContent =
+                    teacher;
+
+
+                select.appendChild(option);
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================
+       إضافة طالب
+    ========================= */
+
 
     function addStudent() {
 
@@ -446,6 +803,12 @@
             .getElementById("studentClass")
             .value
             .trim();
+
+
+        const teacher =
+            document
+            .getElementById("teacher")
+            .value;
 
 
         const written =
@@ -481,12 +844,52 @@
 
 
 
-        // التأكد من إدخال البيانات
+        /* التحقق من البيانات */
 
-        if (!name || !studentClass) {
+
+        if (!name) {
 
             alert(
-                "من فضلك أدخل اسم الطالب والفصل."
+                "من فضلك أدخل اسم الطالب."
+            );
+
+            return;
+        }
+
+
+        if (!studentClass) {
+
+            alert(
+                "من فضلك أدخل الفصل."
+            );
+
+            return;
+        }
+
+
+        if (!teacher) {
+
+            alert(
+                "من فضلك اختر المدرس."
+            );
+
+            return;
+        }
+
+
+        if (
+            written < 0 ||
+            written > 100 ||
+            recitation < 0 ||
+            recitation > 100 ||
+            oral < 0 ||
+            oral > 100 ||
+            homework < 0 ||
+            homework > 100
+        ) {
+
+            alert(
+                "يجب أن تكون كل درجة بين 0 و100."
             );
 
             return;
@@ -494,7 +897,8 @@
 
 
 
-        // حساب المجموع
+        /* حساب المجموع */
+
 
         const total =
             written +
@@ -504,27 +908,32 @@
 
 
 
-        // حساب النسبة
+        /* حساب النسبة */
+
 
         const percentage =
             total / 4;
 
 
 
-        // حساب التقدير
+        /* التقدير */
+
 
         const grade =
             getGrade(percentage);
 
 
 
-        // بيانات الطالب
+        /* بيانات الطالب */
+
 
         const student = {
 
             name: name,
 
             className: studentClass,
+
+            teacher: teacher,
 
             written: written,
 
@@ -547,22 +956,22 @@
         students.push(student);
 
 
-
-        saveData();
-
+        saveStudents();
 
 
         displayStudents();
 
 
-
-        clearInputs();
+        clearStudentInputs();
 
     }
 
 
 
-    // تحديد التقدير
+    /* =========================
+       التقدير
+    ========================= */
+
 
     function getGrade(percentage) {
 
@@ -601,14 +1010,16 @@
 
 
 
-    // عرض الطلاب
+    /* =========================
+       عرض الطلاب
+    ========================= */
+
 
     function displayStudents() {
 
 
         const table =
-            document
-            .getElementById(
+            document.getElementById(
                 "studentsTable"
             );
 
@@ -616,13 +1027,36 @@
         table.innerHTML = "";
 
 
+        if (students.length === 0) {
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="12"
+                        class="empty"
+                    >
+
+                        لا يوجد طلاب مضافون حتى الآن.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
 
         students.forEach(
             (student, index) => {
 
 
                 const row =
-                    document.createElement("tr");
+                    document.createElement(
+                        "tr"
+                    );
 
 
                 row.innerHTML = `
@@ -637,6 +1071,10 @@
 
                     <td>
                         ${student.className}
+                    </td>
+
+                    <td>
+                        ${student.teacher}
                     </td>
 
                     <td>
@@ -697,7 +1135,10 @@
 
 
 
-    // حذف الطالب
+    /* =========================
+       حذف طالب
+    ========================= */
+
 
     function deleteStudent(index) {
 
@@ -712,7 +1153,7 @@
             students.splice(index, 1);
 
 
-            saveData();
+            saveStudents();
 
 
             displayStudents();
@@ -723,7 +1164,10 @@
 
 
 
-    // تحديث الإحصائيات
+    /* =========================
+       الإحصائيات
+    ========================= */
+
 
     function updateStatistics() {
 
@@ -734,6 +1178,14 @@
             )
             .textContent =
             students.length;
+
+
+        document
+            .getElementById(
+                "teacherCount"
+            )
+            .textContent =
+            teachers.length;
 
 
 
@@ -805,9 +1257,30 @@
 
 
 
-    // حفظ البيانات
+    /* =========================
+       حفظ المدرسين
+    ========================= */
 
-    function saveData() {
+
+    function saveTeachers() {
+
+
+        localStorage.setItem(
+            "teachers",
+            JSON.stringify(teachers)
+        );
+
+    }
+
+
+
+    /* =========================
+       حفظ الطلاب
+    ========================= */
+
+
+    function saveStudents() {
+
 
         localStorage.setItem(
             "students",
@@ -818,9 +1291,12 @@
 
 
 
-    // تنظيف الخانات
+    /* =========================
+       تنظيف نموذج الطالب
+    ========================= */
 
-    function clearInputs() {
+
+    function clearStudentInputs() {
 
 
         document
@@ -830,6 +1306,11 @@
 
         document
             .getElementById("studentClass")
+            .value = "";
+
+
+        document
+            .getElementById("teacher")
             .value = "";
 
 
@@ -856,9 +1337,18 @@
 
 
 
-    // تشغيل الموقع
+    /* =========================
+       تشغيل الموقع
+    ========================= */
+
+
+    displayTeachers();
+
+    updateTeacherSelect();
 
     displayStudents();
+
+    updateStatistics();
 
 
 </script>
