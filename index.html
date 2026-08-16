@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>نظام إدارة درجات الطلاب</title>
+    <title>نظام تسجيل درجات الطلاب</title>
 
     <style>
 
         * {
             box-sizing: border-box;
-            font-family: "Tahoma", "Arial", sans-serif;
+            font-family: Tahoma, Arial, sans-serif;
         }
 
         body {
@@ -28,28 +28,23 @@
         }
 
         header h1 {
-            margin: 0 0 8px;
+            margin: 0 0 10px;
         }
 
         header p {
             margin: 0;
-            opacity: 0.9;
         }
 
         .container {
             width: 95%;
-            max-width: 1250px;
+            max-width: 1300px;
             margin: 30px auto;
         }
 
-        /* الإحصائيات */
-
         .stats {
             display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(200px, 1fr)
-            );
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
 
             gap: 20px;
             margin-bottom: 25px;
@@ -77,8 +72,6 @@
             margin: 12px 0 0;
         }
 
-        /* البطاقات */
-
         .card {
             background: white;
             padding: 25px;
@@ -94,16 +87,11 @@
             color: #1e3a8a;
         }
 
-        /* النموذج */
-
         .form {
             display: grid;
 
             grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(180px, 1fr)
-                );
+                repeat(auto-fit, minmax(180px, 1fr));
 
             gap: 15px;
         }
@@ -112,13 +100,10 @@
             width: 100%;
             padding: 13px;
 
-            border:
-                1px solid #d1d5db;
-
+            border: 1px solid #d1d5db;
             border-radius: 8px;
 
             font-size: 15px;
-
             outline: none;
         }
 
@@ -126,22 +111,16 @@
             border-color: #1e3a8a;
         }
 
-        /* الأزرار */
-
         button {
             border: none;
-
-            padding:
-                12px 22px;
+            padding: 12px 22px;
 
             border-radius: 8px;
-
             cursor: pointer;
 
             font-size: 15px;
 
             background: #1e3a8a;
-
             color: white;
         }
 
@@ -157,26 +136,22 @@
             background: #b91c1c;
         }
 
-        /* الجدول */
-
         .table-container {
             overflow-x: auto;
         }
 
         table {
             width: 100%;
-
             border-collapse: collapse;
 
             margin-top: 15px;
 
-            min-width: 900px;
+            min-width: 1000px;
         }
 
         th,
         td {
             padding: 13px;
-
             text-align: center;
 
             border-bottom:
@@ -192,43 +167,14 @@
             background: #f8fafc;
         }
 
-        /* التقديرات */
-
-        .grade-A {
-            color: #16a34a;
-            font-weight: bold;
-        }
-
-        .grade-B {
-            color: #2563eb;
-            font-weight: bold;
-        }
-
-        .grade-C {
-            color: #ca8a04;
-            font-weight: bold;
-        }
-
-        .grade-D {
-            color: #ea580c;
-            font-weight: bold;
-        }
-
-        .grade-F {
-            color: #dc2626;
-            font-weight: bold;
-        }
-
-        /* الهاتف */
-
         @media (max-width: 700px) {
-
-            header h1 {
-                font-size: 22px;
-            }
 
             .container {
                 width: 92%;
+            }
+
+            header h1 {
+                font-size: 22px;
             }
 
             .card {
@@ -238,23 +184,20 @@
         }
 
     </style>
-
 </head>
 
 
 <body>
 
 
-<!-- رأس الموقع -->
-
 <header>
 
     <h1>
-        نظام إدارة درجات الطلاب
+        نظام تسجيل درجات الطلاب
     </h1>
 
     <p>
-        إدارة الطلاب والدرجات بطريقة سهلة وسريعة
+        إدارة درجات الطلاب بطريقة سهلة ومنظمة
     </p>
 
 </header>
@@ -282,7 +225,6 @@
         </div>
 
 
-
         <div class="stat">
 
             <h3>
@@ -294,7 +236,6 @@
             </p>
 
         </div>
-
 
 
         <div class="stat">
@@ -342,8 +283,8 @@
 
             <input
                 type="number"
-                id="arabic"
-                placeholder="اللغة العربية / 100"
+                id="written"
+                placeholder="درجة التحريري / 100"
                 min="0"
                 max="100"
             >
@@ -351,8 +292,8 @@
 
             <input
                 type="number"
-                id="english"
-                placeholder="اللغة الإنجليزية / 100"
+                id="recitation"
+                placeholder="درجة السرد / 100"
                 min="0"
                 max="100"
             >
@@ -360,8 +301,8 @@
 
             <input
                 type="number"
-                id="math"
-                placeholder="الرياضيات / 100"
+                id="oral"
+                placeholder="درجة الشفوي / 100"
                 min="0"
                 max="100"
             >
@@ -369,8 +310,8 @@
 
             <input
                 type="number"
-                id="science"
-                placeholder="العلوم / 100"
+                id="homework"
+                placeholder="درجة الواجب / 100"
                 min="0"
                 max="100"
             >
@@ -393,10 +334,9 @@
 
 
 
-    <!-- جدول الطلاب -->
+    <!-- جدول الدرجات -->
 
     <div class="card">
-
 
         <h2>
             سجل درجات الطلاب
@@ -404,7 +344,6 @@
 
 
         <div class="table-container">
-
 
             <table>
 
@@ -426,19 +365,19 @@
                         </th>
 
                         <th>
-                            العربي
+                            درجة التحريري
                         </th>
 
                         <th>
-                            الإنجليزي
+                            درجة السرد
                         </th>
 
                         <th>
-                            الرياضيات
+                            درجة الشفوي
                         </th>
 
                         <th>
-                            العلوم
+                            درجة الواجب
                         </th>
 
                         <th>
@@ -454,7 +393,7 @@
                         </th>
 
                         <th>
-                            إجراء
+                            الإجراء
                         </th>
 
                     </tr>
@@ -469,9 +408,7 @@
 
             </table>
 
-
         </div>
-
 
     </div>
 
@@ -483,460 +420,445 @@
 <script>
 
 
-/* تحميل البيانات */
+    // تحميل البيانات
 
-let students =
-    JSON.parse(
-        localStorage.getItem("students")
-    ) || [];
-
-
-
-/* إضافة طالب */
-
-function addStudent() {
+    let students =
+        JSON.parse(
+            localStorage.getItem("students")
+        ) || [];
 
 
-    const name =
-        document
-        .getElementById("studentName")
-        .value
-        .trim();
+
+    // إضافة طالب
+
+    function addStudent() {
 
 
-    const studentClass =
-        document
-        .getElementById("studentClass")
-        .value
-        .trim();
-
-
-    const arabic =
-        Number(
+        const name =
             document
-            .getElementById("arabic")
+            .getElementById("studentName")
             .value
-        );
+            .trim();
 
 
-    const english =
-        Number(
+        const studentClass =
             document
-            .getElementById("english")
+            .getElementById("studentClass")
             .value
-        );
+            .trim();
 
 
-    const math =
-        Number(
-            document
-            .getElementById("math")
-            .value
-        );
+        const written =
+            Number(
+                document
+                .getElementById("written")
+                .value
+            );
 
 
-    const science =
-        Number(
-            document
-            .getElementById("science")
-            .value
-        );
+        const recitation =
+            Number(
+                document
+                .getElementById("recitation")
+                .value
+            );
 
 
+        const oral =
+            Number(
+                document
+                .getElementById("oral")
+                .value
+            );
 
-    /* التحقق من البيانات */
 
-    if (!name || !studentClass) {
+        const homework =
+            Number(
+                document
+                .getElementById("homework")
+                .value
+            );
 
-        alert(
-            "من فضلك أدخل اسم الطالب والفصل."
-        );
 
-        return;
 
-    }
+        // التأكد من إدخال البيانات
 
+        if (!name || !studentClass) {
 
+            alert(
+                "من فضلك أدخل اسم الطالب والفصل."
+            );
 
-    /* حساب المجموع */
-
-    const total =
-        arabic +
-        english +
-        math +
-        science;
-
-
-
-    /* حساب النسبة */
-
-    const percentage =
-        total / 4;
-
-
-
-    /* حساب التقدير */
-
-    const grade =
-        getGrade(percentage);
-
-
-
-    const student = {
-
-        name: name,
-
-        className: studentClass,
-
-        arabic: arabic,
-
-        english: english,
-
-        math: math,
-
-        science: science,
-
-        total: total,
-
-        percentage: percentage,
-
-        grade: grade
-
-    };
-
-
-
-    students.push(student);
-
-
-
-    saveData();
-
-    displayStudents();
-
-    clearInputs();
-
-
-    alert(
-        "تمت إضافة الطالب بنجاح."
-    );
-
-}
-
-
-
-/* حساب التقدير */
-
-function getGrade(percentage) {
-
-
-    if (percentage >= 90)
-        return "ممتاز";
-
-
-    if (percentage >= 80)
-        return "جيد جداً";
-
-
-    if (percentage >= 70)
-        return "جيد";
-
-
-    if (percentage >= 60)
-        return "مقبول";
-
-
-    return "راسب";
-
-}
-
-
-
-/* عرض الطلاب */
-
-function displayStudents() {
-
-
-    const table =
-        document
-        .getElementById(
-            "studentsTable"
-        );
-
-
-    table.innerHTML = "";
-
-
-
-    students.forEach(
-        (student, index) => {
-
-
-            let gradeClass = "";
-
-
-            if (student.grade === "ممتاز")
-                gradeClass = "grade-A";
-
-
-            else if (
-                student.grade === "جيد جداً"
-            )
-                gradeClass = "grade-B";
-
-
-            else if (
-                student.grade === "جيد"
-            )
-                gradeClass = "grade-C";
-
-
-            else if (
-                student.grade === "مقبول"
-            )
-                gradeClass = "grade-D";
-
-
-            else
-                gradeClass = "grade-F";
-
-
-
-            const row =
-                document.createElement("tr");
-
-
-
-            row.innerHTML = `
-
-                <td>
-                    ${index + 1}
-                </td>
-
-                <td>
-                    ${student.name}
-                </td>
-
-                <td>
-                    ${student.className}
-                </td>
-
-                <td>
-                    ${student.arabic}
-                </td>
-
-                <td>
-                    ${student.english}
-                </td>
-
-                <td>
-                    ${student.math}
-                </td>
-
-                <td>
-                    ${student.science}
-                </td>
-
-                <td>
-                    ${student.total} / 400
-                </td>
-
-                <td>
-                    ${student.percentage.toFixed(1)}%
-                </td>
-
-                <td class="${gradeClass}">
-                    ${student.grade}
-                </td>
-
-                <td>
-
-                    <button
-                        class="delete"
-                        onclick="deleteStudent(${index})"
-                    >
-
-                        حذف
-
-                    </button>
-
-                </td>
-
-            `;
-
-
-            table.appendChild(row);
-
+            return;
         }
-    );
 
 
 
-    updateStatistics();
+        // حساب المجموع
 
-}
-
-
-
-/* حذف طالب */
-
-function deleteStudent(index) {
+        const total =
+            written +
+            recitation +
+            oral +
+            homework;
 
 
-    const confirmDelete =
-        confirm(
-            "هل أنت متأكد من حذف هذا الطالب؟"
-        );
+
+        // حساب النسبة
+
+        const percentage =
+            total / 4;
 
 
-    if (confirmDelete) {
 
-        students.splice(index, 1);
+        // حساب التقدير
+
+        const grade =
+            getGrade(percentage);
+
+
+
+        // بيانات الطالب
+
+        const student = {
+
+            name: name,
+
+            className: studentClass,
+
+            written: written,
+
+            recitation: recitation,
+
+            oral: oral,
+
+            homework: homework,
+
+            total: total,
+
+            percentage: percentage,
+
+            grade: grade
+
+        };
+
+
+
+        students.push(student);
+
+
 
         saveData();
 
+
+
         displayStudents();
 
-    }
-
-}
 
 
-
-/* تحديث الإحصائيات */
-
-function updateStatistics() {
-
-
-    document
-    .getElementById(
-        "studentCount"
-    )
-    .textContent =
-        students.length;
-
-
-
-    if (students.length === 0) {
-
-        document
-        .getElementById(
-            "highestGrade"
-        )
-        .textContent = "0%";
-
-
-        document
-        .getElementById(
-            "averageGrade"
-        )
-        .textContent = "0%";
-
-
-        return;
+        clearInputs();
 
     }
 
 
 
-    const percentages =
-        students.map(
-            student =>
-                student.percentage
+    // تحديد التقدير
+
+    function getGrade(percentage) {
+
+
+        if (percentage >= 90) {
+
+            return "ممتاز";
+
+        }
+
+
+        if (percentage >= 80) {
+
+            return "جيد جدًا";
+
+        }
+
+
+        if (percentage >= 70) {
+
+            return "جيد";
+
+        }
+
+
+        if (percentage >= 60) {
+
+            return "مقبول";
+
+        }
+
+
+        return "راسب";
+
+    }
+
+
+
+    // عرض الطلاب
+
+    function displayStudents() {
+
+
+        const table =
+            document
+            .getElementById(
+                "studentsTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+
+        students.forEach(
+            (student, index) => {
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        ${student.name}
+                    </td>
+
+                    <td>
+                        ${student.className}
+                    </td>
+
+                    <td>
+                        ${student.written}
+                    </td>
+
+                    <td>
+                        ${student.recitation}
+                    </td>
+
+                    <td>
+                        ${student.oral}
+                    </td>
+
+                    <td>
+                        ${student.homework}
+                    </td>
+
+                    <td>
+                        ${student.total} / 400
+                    </td>
+
+                    <td>
+                        ${student.percentage.toFixed(1)}%
+                    </td>
+
+                    <td>
+                        ${student.grade}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete"
+                            onclick="
+                                deleteStudent(${index})
+                            "
+                        >
+
+                            حذف
+
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            }
         );
 
 
+        updateStatistics();
 
-    const highest =
-        Math.max(
-            ...percentages
+    }
+
+
+
+    // حذف الطالب
+
+    function deleteStudent(index) {
+
+
+        if (
+            confirm(
+                "هل أنت متأكد من حذف هذا الطالب؟"
+            )
+        ) {
+
+
+            students.splice(index, 1);
+
+
+            saveData();
+
+
+            displayStudents();
+
+        }
+
+    }
+
+
+
+    // تحديث الإحصائيات
+
+    function updateStatistics() {
+
+
+        document
+            .getElementById(
+                "studentCount"
+            )
+            .textContent =
+            students.length;
+
+
+
+        if (students.length === 0) {
+
+
+            document
+                .getElementById(
+                    "highestGrade"
+                )
+                .textContent =
+                "0%";
+
+
+            document
+                .getElementById(
+                    "averageGrade"
+                )
+                .textContent =
+                "0%";
+
+
+            return;
+
+        }
+
+
+
+        const percentages =
+            students.map(
+                student =>
+                    student.percentage
+            );
+
+
+
+        const highest =
+            Math.max(
+                ...percentages
+            );
+
+
+
+        const average =
+            percentages.reduce(
+                (a, b) => a + b,
+                0
+            ) / percentages.length;
+
+
+
+        document
+            .getElementById(
+                "highestGrade"
+            )
+            .textContent =
+            highest.toFixed(1) + "%";
+
+
+
+        document
+            .getElementById(
+                "averageGrade"
+            )
+            .textContent =
+            average.toFixed(1) + "%";
+
+    }
+
+
+
+    // حفظ البيانات
+
+    function saveData() {
+
+        localStorage.setItem(
+            "students",
+            JSON.stringify(students)
         );
 
-
-
-    const average =
-        percentages.reduce(
-            (a, b) => a + b,
-            0
-        ) / percentages.length;
+    }
 
 
 
-    document
-    .getElementById(
-        "highestGrade"
-    )
-    .textContent =
-        highest.toFixed(1) + "%";
+    // تنظيف الخانات
+
+    function clearInputs() {
+
+
+        document
+            .getElementById("studentName")
+            .value = "";
+
+
+        document
+            .getElementById("studentClass")
+            .value = "";
+
+
+        document
+            .getElementById("written")
+            .value = "";
+
+
+        document
+            .getElementById("recitation")
+            .value = "";
+
+
+        document
+            .getElementById("oral")
+            .value = "";
+
+
+        document
+            .getElementById("homework")
+            .value = "";
+
+    }
 
 
 
-    document
-    .getElementById(
-        "averageGrade"
-    )
-    .textContent =
-        average.toFixed(1) + "%";
+    // تشغيل الموقع
 
-}
-
-
-
-/* حفظ البيانات */
-
-function saveData() {
-
-
-    localStorage.setItem(
-        "students",
-        JSON.stringify(students)
-    );
-
-}
-
-
-
-/* تنظيف الخانات */
-
-function clearInputs() {
-
-
-    document
-    .getElementById("studentName")
-    .value = "";
-
-
-    document
-    .getElementById("studentClass")
-    .value = "";
-
-
-    document
-    .getElementById("arabic")
-    .value = "";
-
-
-    document
-    .getElementById("english")
-    .value = "";
-
-
-    document
-    .getElementById("math")
-    .value = "";
-
-
-    document
-    .getElementById("science")
-    .value = "";
-
-}
-
-
-
-/* تشغيل الموقع */
-
-displayStudents();
+    displayStudents();
 
 
 </script>
